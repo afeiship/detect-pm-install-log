@@ -1,6 +1,6 @@
 {
   "name": "@jswork/detect-pm-install-log",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Detect package manager and print install hint log for given packages.",
   "npmClient": "pnpm",
   "main": "dist/index.cjs.js",
