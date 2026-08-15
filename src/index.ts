@@ -1,14 +1,33 @@
-// 1-9
-// quotient 商
-// remainder 余数
+import fs from 'fs';
+import path from 'path';
 
-const detectPmInstallLog = (inNumber: number | string): number[] => {
-  const str = String(inNumber);
-  const rdx = str.length - 1;
-  return str.split('').map((n: string, idx) => {
-    if (n === '0') return 0;
-    return parseInt(n, 10) * Math.pow(10, rdx - idx);
+export interface Options {
+  packages: string[];
+  cwd?: string;
+}
+
+type PM = 'pnpm' | 'yarn' | 'npm';
+
+const LOCK_FILE_MAP: Array<{ lockFile: string; pm: PM }> = [
+  { lockFile: 'pnpm-lock.yaml', pm: 'pnpm' },
+  { lockFile: 'yarn.lock', pm: 'yarn' },
+];
+
+function detectPm(cwd: string): PM {
+  for (const { lockFile, pm } of LOCK_FILE_MAP) {
+    if (fs.existsSync(path.join(cwd, lockFile))) {
+      return pm;
+    }
+  }
+  return 'npm';
+}
+
+function detectPmInstallLog(options: Options): void {
+  const { packages, cwd = process.cwd() } = options;
+  const pm = detectPm(cwd);
+  packages.forEach((pkg) => {
+    console.log(`📦 installing ${pkg} dependencies via "${pm}"...`);
   });
-};
+}
 
 export default detectPmInstallLog;

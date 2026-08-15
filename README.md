@@ -1,5 +1,5 @@
 # detect-pm-install-log
-> Detect package manager and print install hint log for given packages.
+> Detect project package manager and print install hint log for given packages.
 
 [![version][version-image]][version-url]
 [![license][license-image]][license-url]
@@ -11,13 +11,38 @@ yarn add @jswork/detect-pm-install-log
 ```
 
 ## usage
-```js
+```ts
 import detectPmInstallLog from '@jswork/detect-pm-install-log';
 
-detectPmInstallLog(1024);
+detectPmInstallLog({
+  packages: [
+    '@jswork/http-schema',
+    '@jswork/universal-request-adapter-fetch',
+    '@jswork/universal-request-core',
+  ]
+});
 
-// [1000, 0, 20, 4]
+// 📦 installing @jswork/http-schema dependencies via "pnpm"...
+// 📦 installing @jswork/universal-request-adapter-fetch dependencies via "pnpm"...
+// 📦 installing @jswork/universal-request-core dependencies via "pnpm"...
 ```
+
+## API
+
+### detectPmInstallLog(options)
+
+| Param | Type | Default | Description |
+|-------|------|---------|-------------|
+| options.packages | `string[]` | — | Packages to install |
+| options.cwd | `string` | `process.cwd()` | Project root directory |
+
+### Detection Rules
+
+| Lock file | Detected PM |
+|-----------|-------------|
+| `pnpm-lock.yaml` | pnpm |
+| `yarn.lock` | yarn |
+| none / other | npm |
 
 ## license
 Code released under [the MIT license](https://github.com/afeiship/detect-pm-install-log/blob/main/LICENSE.txt).
