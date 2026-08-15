@@ -37,7 +37,9 @@
   "homepage": "https://js.work",
   "keywords": [
     "detect-pm-install-log",
-    "number",
-    "num"
+    "npm",
+    "yarn",
+    "pnpm",
+    "install"
   ]
 }
